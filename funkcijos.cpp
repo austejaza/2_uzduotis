@@ -21,20 +21,20 @@ int ivestiSkaiciu(const std::string& pranesimas) {
     }
 }
 
-void printas(const studentas& s, int pasirinkimas) {
+void printas(const Studentas& s, int pasirinkimas) {
     std::cout << std::left << std::setw(15) << s.vardas()
               << std::left << std::setw(15) << s.pavarde();
     if (pasirinkimas == 1) {
-        std::cout << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid() << "\n";
+        std::cout << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinisVidurkis() << "\n";
     } else if (pasirinkimas == 2) {
-        std::cout << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med() << "\n";
+        std::cout << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutineMediana() << "\n";
     } else {
-        std::cout << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid()
-                  << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med() << "\n";
+        std::cout << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinisVidurkis()
+                  << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutineMediana() << "\n";
     }
 }
 
-void isvestiIFaila(const std::string& failo_pavadinimas, const std::vector<studentas>& sarasas, int pasirinkimas) {
+void isvestiIFaila(const std::string& failo_pavadinimas, const std::vector<Studentas>& sarasas, int pasirinkimas) {
     std::ofstream fr(failo_pavadinimas);
     if (!fr.is_open()) return;
 
@@ -56,17 +56,17 @@ void isvestiIFaila(const std::string& failo_pavadinimas, const std::vector<stude
         fr << std::left << std::setw(15) << s.vardas()
            << std::left << std::setw(15) << s.pavarde();
         if (pasirinkimas == 1) {
-            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid() << "\n";
+            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinisVidurkis() << "\n";
         } else if (pasirinkimas == 2) {
-            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med() << "\n";
+            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutineMediana() << "\n";
         } else {
-            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid()
-               << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med() << "\n";
+            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinisVidurkis()
+               << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutineMediana() << "\n";
         }
     }
     fr.close();
 }
-void isvestiIFaila(const std::string& failo_pavadinimas, const std::list<studentas>& sarasas, int pasirinkimas) {
+void isvestiIFaila(const std::string& failo_pavadinimas, const std::list<Studentas>& sarasas, int pasirinkimas) {
     std::ofstream fr(failo_pavadinimas);
     if (!fr.is_open()) return;
 
@@ -88,12 +88,12 @@ void isvestiIFaila(const std::string& failo_pavadinimas, const std::list<student
         fr << std::left << std::setw(15) << s.vardas()
            << std::left << std::setw(15) << s.pavarde();
         if (pasirinkimas == 1) {
-            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid() << "\n";
+            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinisVidurkis() << "\n";
         } else if (pasirinkimas == 2) {
-            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med() << "\n";
+            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutineMediana() << "\n";
         } else {
-            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid()
-               << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med() << "\n";
+            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinisVidurkis()
+               << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutineMediana() << "\n";
         }
     }
     fr.close();

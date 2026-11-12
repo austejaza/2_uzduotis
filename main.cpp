@@ -26,7 +26,7 @@ int main() {
 
     if (rezimas == 1) {
         string failo_pavadinimas = "";
-        studentas A;
+        Studentas A;
 
 
         std::cout << "Pasirinkite veiksma:\n";
@@ -79,7 +79,7 @@ int main() {
         std::cout << "\n--- REZULTATAI (" << failo_pavadinimas << ") ---\n";
 
 
-        vector<studentas> sarasas_v;
+        vector<Studentas> sarasas_v;
         clock_t pradzia_nusk_v = clock();
         std::ifstream fd1(failo_pavadinimas);
 
@@ -89,7 +89,10 @@ int main() {
             if (eilute.empty()) continue;
 
             std::stringstream ss(eilute);
-            ss >> A.vardas >> A.pavarde;
+            string v, p;
+            ss >> v >> p;
+            A.nustatytiVarda(v);
+            A.nustatytiPavarde(p);
 
             int skaicius;
             vector<int> visi_skaiciai;
@@ -97,27 +100,31 @@ int main() {
                 visi_skaiciai.push_back(skaicius);
             }
 
+            A.isvalytiPazymius();
             if (!visi_skaiciai.empty()) {
-                A.exam = visi_skaiciai.back();
+                int ex = visi_skaiciai.back();
                 visi_skaiciai.pop_back();
-                A.paz = visi_skaiciai;
+                A.nustatytiEgzamina(ex);
+                for (int paz : visi_skaiciai) {
+                    A.pridetiPazymi(paz);
+                }
             }
-            float sum = 0;
-            for (int p : A.paz) sum += p;
-            float vid = !A.paz.empty() ? sum / A.paz.size() : 0.0;
-            float med = Mediana(A.paz);
 
-            A.galutinis_vid = 0.4 * vid + 0.6 * A.exam;
-            A.galutinis_med = 0.4 * med + 0.6 * A.exam;
+            vector<int> paz_list = A.pazymiai();
+            float sum = 0;
+            for (int paz : paz_list) sum += paz;
+            float vid = !paz_list.empty() ? sum / paz_list.size() : 0.0;
+            float med = Mediana(paz_list);
+
+            A.nustatytiGalutinius(0.4 * vid + 0.6 * A.egzaminas(), 0.4 * med + 0.6 * A.egzaminas());
 
             sarasas_v.push_back(A);
-            A.paz.clear();
         }
         fd1.close();
         clock_t pabaiga_nusk_v = clock();
         double laikas_nusk_v = double(pabaiga_nusk_v - pradzia_nusk_v) / CLOCKS_PER_SEC;
 
-        list<studentas> sarasas_l;
+        list<Studentas> sarasas_l;
         clock_t pradzia_nusk_l = clock();
 
         std::ifstream fd2(failo_pavadinimas);
@@ -125,23 +132,32 @@ int main() {
         while (std::getline(fd2, eilute)) {
             if (eilute.empty()) continue;
             std::stringstream ss(eilute);
-            ss >> A.vardas >> A.pavarde;
+            string v, p;
+            ss >> v >> p;
+            A.nustatytiVarda(v);
+            A.nustatytiPavarde(p);
+
             int skaicius;
             vector<int> visi_skaiciai;
             while (ss >> skaicius) visi_skaiciai.push_back(skaicius);
+
+            A.isvalytiPazymius();
             if (!visi_skaiciai.empty()) {
-                A.exam = visi_skaiciai.back();
+                int ex = visi_skaiciai.back();
                 visi_skaiciai.pop_back();
-                A.paz = visi_skaiciai;
+                A.nustatytiEgzamina(ex);
+                for (int paz : visi_skaiciai) {
+                    A.pridetiPazymi(paz);
+                }
             }
+            vector<int> paz_list = A.pazymiai();
             float sum = 0;
-            for (int p : A.paz) sum += p;
-            float vid = !A.paz.empty() ? sum / A.paz.size() : 0.0;
-            float med = Mediana(A.paz);
-            A.galutinis_vid = 0.4 * vid + 0.6 * A.exam;
-            A.galutinis_med = 0.4 * med + 0.6 * A.exam;
+            for (int paz : paz_list) sum += paz;
+            float vid = !paz_list.empty() ? sum / paz_list.size() : 0.0;
+            float med = Mediana(paz_list);
+            A.nustatytiGalutinius(0.4 * vid + 0.6 * A.egzaminas(), 0.4 * med + 0.6 * A.egzaminas());
+
             sarasas_l.push_back(A);
-            A.paz.clear();
         }
         fd2.close();
         clock_t pabaiga_nusk_l = clock();
@@ -153,23 +169,23 @@ int main() {
 
         clock_t pradzia_vec = clock();
 
-        vector<studentas> vargsiukai_v;
-        vector<studentas> kietiakiai_v;
+        vector<Studentas> vargsiukai_v;
+        vector<Studentas> kietiakiai_v;
 
         for (const auto &s : sarasas_v) {
-            if (s.galutinis_vid < 5.0) {
+            if (s.galutinisVidurkis() < 5.0) {
                 vargsiukai_v.push_back(s);
             } else {
                 kietiakiai_v.push_back(s);
             }
         }
 
-        std::sort(vargsiukai_v.begin(), vargsiukai_v.end(), [](const studentas& a, const studentas& b) {
-            return a.galutinis_vid > b.galutinis_vid;
+        std::sort(vargsiukai_v.begin(), vargsiukai_v.end(), [](const Studentas& a, const Studentas& b) {
+            return a.galutinisVidurkis() > b.galutinisVidurkis();
         });
 
-        std::sort(kietiakiai_v.begin(), kietiakiai_v.end(), [](const studentas& a, const studentas& b) {
-            return a.galutinis_vid > b.galutinis_vid;
+        std::sort(kietiakiai_v.begin(), kietiakiai_v.end(), [](const Studentas& a, const Studentas& b) {
+            return a.galutinisVidurkis() > b.galutinisVidurkis();
         });
 
         clock_t pabaiga_vec = clock();
@@ -178,22 +194,22 @@ int main() {
 
         clock_t pradzia_list = clock();
 
-        list<studentas> vargsiukai_l;
-        list<studentas> kietiakiai_l;
+        list<Studentas> vargsiukai_l;
+        list<Studentas> kietiakiai_l;
 
         for (const auto &s : sarasas_l) {
-            if (s.galutinis_vid < 5.0) {
+            if (s.galutinisVidurkis() < 5.0) {
                 vargsiukai_l.push_back(s);
             } else {
                 kietiakiai_l.push_back(s);
             }
         }
-        vargsiukai_l.sort([](const studentas& a, const studentas& b) {
-            return a.galutinis_vid > b.galutinis_vid;
+        vargsiukai_l.sort([](const Studentas& a, const Studentas& b) {
+            return a.galutinisVidurkis() > b.galutinisVidurkis();
         });
 
-        kietiakiai_l.sort([](const studentas& a, const studentas& b) {
-            return a.galutinis_vid > b.galutinis_vid;
+        kietiakiai_l.sort([](const Studentas& a, const Studentas& b) {
+            return a.galutinisVidurkis() > b.galutinisVidurkis();
         });
 
 
@@ -225,12 +241,12 @@ int main() {
 
 
 
-        list<studentas> sarasas_l2 = sarasas_l;
+        list<Studentas> sarasas_l2 = sarasas_l;
         clock_t pradzia_strat2_l = clock();
 
-        list<studentas> vargsiukai_l2;
+        list<Studentas> vargsiukai_l2;
         for (auto it = sarasas_l2.begin(); it != sarasas_l2.end(); ) {
-            if (it->galutinis_vid < 5.0) {
+            if (it->galutinisVidurkis() < 5.0) {
                 vargsiukai_l2.push_back(*it);
                 it = sarasas_l2.erase(it);
             } else {
@@ -238,25 +254,25 @@ int main() {
             }
         }
 
-        vargsiukai_l2.sort([](const studentas& a, const studentas& b) { return a.galutinis_vid > b.galutinis_vid; });
-        sarasas_l2.sort([](const studentas& a, const studentas& b) { return a.galutinis_vid > b.galutinis_vid; });
+        vargsiukai_l2.sort([](const Studentas& a, const Studentas& b) { return a.galutinisVidurkis() > b.galutinisVidurkis(); });
+        sarasas_l2.sort([](const Studentas& a, const Studentas& b) { return a.galutinisVidurkis() > b.galutinisVidurkis(); });
 
         clock_t pabaiga_strat2_l = clock();
         double laikas_strat2_l = double(pabaiga_strat2_l - pradzia_strat2_l) / CLOCKS_PER_SEC;
         std::cout << "2d. Studentu rusiavimas i 2 grupes (2 strategija su list) uztruko:   " << laikas_strat2_l << " s.\n";
 
 
-        vector<studentas> sarasas_v3 = sarasas_v;
+        vector<Studentas> sarasas_v3 = sarasas_v;
         clock_t pradzia_strat2_v3 = clock();
-        auto ribos_it = std::partition(sarasas_v3.begin(), sarasas_v3.end(), [](const studentas& s) {
-            return s.galutinis_vid < 5.0;
+        auto ribos_it = std::partition(sarasas_v3.begin(), sarasas_v3.end(), [](const Studentas& s) {
+            return s.galutinisVidurkis() < 5.0;
         });
 
-        vector<studentas> vargsiukai_v3(sarasas_v3.begin(), ribos_it);
-        vector<studentas> kietiakiai_v3(ribos_it, sarasas_v3.end());
+        vector<Studentas> vargsiukai_v3(sarasas_v3.begin(), ribos_it);
+        vector<Studentas> kietiakiai_v3(ribos_it, sarasas_v3.end());
 
-        std::sort(vargsiukai_v3.begin(), vargsiukai_v3.end(), [](const studentas& a, const studentas& b) { return a.galutinis_vid > b.galutinis_vid; });
-        std::sort(kietiakiai_v3.begin(), kietiakiai_v3.end(), [](const studentas& a, const studentas& b) { return a.galutinis_vid > b.galutinis_vid; });
+        std::sort(vargsiukai_v3.begin(), vargsiukai_v3.end(), [](const Studentas& a, const Studentas& b) { return a.galutinisVidurkis() > b.galutinisVidurkis(); });
+        std::sort(kietiakiai_v3.begin(), kietiakiai_v3.end(), [](const Studentas& a, const Studentas& b) { return a.galutinisVidurkis() > b.galutinisVidurkis(); });
 
         clock_t pabaiga_strat2_v3 = clock();
         double laikas_strat2_v3 = double(pabaiga_strat2_v3 - pradzia_strat2_v3) / CLOCKS_PER_SEC;
@@ -290,8 +306,8 @@ int main() {
     }
 
     else {
-        vector<studentas> sarasas;
-        studentas A;
+        vector<Studentas> sarasas;
+        Studentas A;
         string failo_pavadinimas = "";
 
         std::cout << "Pasirinkite duomenu saltini:\n";
@@ -337,7 +353,10 @@ int main() {
                 if (eilute.empty()) continue;
 
                 std::stringstream ss(eilute);
-                ss >> A.vardas >> A.pavarde;
+                string v, p;
+                ss >> v >> p;
+                A.nustatytiVarda(v);
+                A.nustatytiPavarde(p);
 
                 int skaicius;
                 vector<int> visi_skaiciai;
@@ -345,33 +364,40 @@ int main() {
                     visi_skaiciai.push_back(skaicius);
                 }
 
+                A.isvalytiPazymius();
                 if (!visi_skaiciai.empty()) {
-                    A.exam = visi_skaiciai.back();
+                    int ex = visi_skaiciai.back();
                     visi_skaiciai.pop_back();
-                    A.paz = visi_skaiciai;
+                    A.nustatytiEgzamina(ex);
+                    for (int paz : visi_skaiciai) {
+                        A.pridetiPazymi(paz);
+                    }
                 }
+                vector<int> paz_list = A.pazymiai();
                 float sum = 0;
-                for (int p : A.paz) sum += p;
-                float vid = !A.paz.empty() ? sum / A.paz.size() : 0.0;
-                float med = Mediana(A.paz);
+                for (int paz : paz_list) sum += paz;
+                float vid = !paz_list.empty() ? sum / paz_list.size() : 0.0;
+                float med = Mediana(paz_list);
 
-                A.galutinis_vid = 0.4 * vid + 0.6 * A.exam;
-                A.galutinis_med = 0.4 * med + 0.6 * A.exam;
+                A.nustatytiGalutinius(0.4 * vid + 0.6 * A.egzaminas(), 0.4 * med + 0.6 * A.egzaminas());
 
                 sarasas.push_back(A);
-                A.paz.clear();
             }
             fd.close();
         } else {
             int n = ivestiSkaiciu("Kiek yra studentu sarase: ");
 
             for (int j = 0; j < n; j++) {
-                A.paz.clear();
+                A.isvalytiPazymius();
+
+                string v, p;
 
                 std::cout << "Studento objekto atminties adresas atmintyje: " << &A << "\n";
 
                 std::cout << "\nIveskite studento vardas ir pavarde: ";
-                std::cin >> A.vardas >> A.pavarde;
+                std::cin >> v >> p;
+                A.nustatytiVarda(v);
+                A.nustatytiPavarde(p);
 
                 std::cout << "Pasirinkite pazymiu ivedimo buda:\n";
                 std::cout << "1 - Ivesti pazymius rankiniu budu\n";
@@ -385,13 +411,13 @@ int main() {
                     std::cin >> nd_kiekis;
 
                     for (int i = 0; i < nd_kiekis; i++) {
-                        A.paz.push_back(rand() % 10 + 1);
+                        A.pridetiPazymi(rand() % 10 + 1);
                     }
-                    A.exam = rand() % 10 + 1;
+                    A.nustatytiEgzamina(rand() % 10 + 1);
 
                     std::cout << "Sugeneruoti ND pazymiai: ";
-                    for (int p : A.paz) std::cout << p << " ";
-                    std::cout << "\nSugeneruotas egzamino pazymys: " << A.exam << "\n";
+                    for (int p_z : A.pazymiai()) std::cout << p_z << " ";
+                    std::cout << "\nSugeneruotas egzamino pazymys: " << A.egzaminas() << "\n";
                 } else {
                     std::cin.ignore(1000, '\n');
                     std::cout << "Iveskite ND pazymius (spauskite du kartus ENTER, kad baigtumete):\n";
@@ -403,23 +429,22 @@ int main() {
                         std::stringstream ss(eilute);
                         int pazymys;
                         while (ss >> pazymys) {
-                            A.paz.push_back(pazymys);
+                            A.pridetiPazymi(pazymys);
                         }
                     }
 
-                    A.exam = ivestiSkaiciu("Iveskite semestro Egzamino paz: ");
+                    A.nustatytiEgzamina(ivestiSkaiciu("Iveskite semestro Egzamino paz: "));
                 }
 
+                vector<int> paz_list = A.pazymiai();
                 float sum = 0;
-                for (int p : A.paz) sum += p;
-                float vid = !A.paz.empty() ? sum / A.paz.size() : 0.0;
-                float med = Mediana(A.paz);
+                for (int paz : paz_list) sum += paz;
+                float vid = !paz_list.empty() ? sum / paz_list.size() : 0.0;
+                float med = Mediana(paz_list);
 
-                A.galutinis_vid = 0.4 * vid + 0.6 * A.exam;
-                A.galutinis_med = 0.4 * med + 0.6 * A.exam;
+                A.nustatytiGalutinius(0.4 * vid + 0.6 * A.egzaminas(), 0.4 * med + 0.6 * A.egzaminas());
 
                 sarasas.push_back(A);
-                A.paz.clear();
             }
         }
 
@@ -438,32 +463,32 @@ int main() {
         std::cout << string(50, '-') << "\n";
 
         for (const auto &s : sarasas) {
-            std::cout << std::left << std::setw(15) << s.vardas
-                      << std::setw(15) << s.pavarde;
+            std::cout << std::left << std::setw(15) << s.vardas()
+                      << std::setw(15) << s.pavarde();
             if (pasirinkimas == 1) {
-                std::cout << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinis_vid << "\n";
+                std::cout << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinisVidurkis() << "\n";
             } else {
-                std::cout << std::setw(20) << std::fixed << std::setprecision(2) << s.galutinis_med << "\n";
+                std::cout << std::setw(20) << std::fixed << std::setprecision(2) << s.galutineMediana() << "\n";
             }
         }
 
-        vector<studentas> vargsiukai;
-        vector<studentas> kietiakiai;
+        vector<Studentas> vargsiukai;
+        vector<Studentas> kietiakiai;
 
         for (const auto &s : sarasas) {
-            float balas = (pasirinkimas == 2) ? s.galutinis_med : s.galutinis_vid;
+            float balas = (pasirinkimas == 2) ? s.galutineMediana() : s.galutinisVidurkis();
             if (balas < 5.0) {
                 vargsiukai.push_back(s);
             } else {
                 kietiakiai.push_back(s);
             }
         }
-        std::sort(vargsiukai.begin(), vargsiukai.end(), [](const studentas& a, const studentas& b) {
-            return a.galutinis_vid > b.galutinis_vid;
+        std::sort(vargsiukai.begin(), vargsiukai.end(), [](const Studentas& a, const Studentas& b) {
+            return a.galutinisVidurkis() > b.galutinisVidurkis();
         });
 
-        std::sort(kietiakiai.begin(), kietiakiai.end(), [](const studentas& a, const studentas& b) {
-            return a.galutinis_vid > b.galutinis_vid;
+        std::sort(kietiakiai.begin(), kietiakiai.end(), [](const Studentas& a, const Studentas& b) {
+            return a.galutinisVidurkis() > b.galutinisVidurkis();
         });
 
 

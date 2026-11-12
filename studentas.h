@@ -24,13 +24,17 @@ public:
     inline std::vector<int> pazymiai() const { return paz_; }
     inline int egzaminas() const { return exam_; }
     inline double galutinisVidurkis() const { return galutinis_vid_; }
-    inline double galutinėMediana() const { return galutinis_med_; }
+    inline double galutineMediana() const { return galutinis_med_; }
 
     void nustatytiVarda(const std::string& v) { vardas_ = v; }
     void nustatytiPavarde(const std::string& p) { pavarde_ = p; }
     void pridetiPazymi(int p) { paz_.push_back(p); }
     void nustatytiEgzamina(int e) { exam_ = e; }
     void isvalytiPazymius() { paz_.clear(); }
+    void nustatytiGalutinius(double vid, double med) {
+    galutinis_vid_ = vid;
+    galutinis_med_ = med;
+}
 
     void skaiciuotiGalutinius();
 
