@@ -11,9 +11,9 @@ Spartos tyrimas atliktas naudojant `std::vector` konteinerį ir 3-iąją dalijim
 | Įrašų kiekis | Versija | Nuskaitymas (s) | Rūšiavimas / Skaidymas (s) | Išvedimas (s) | Bendras laikas (s) |
 | :--- | :--- | :---: | :---: | :---: | :---: |
 | **100 000** | **v1.0** (`struct`) | 0.543 | 0.280 | 0.247 | **1.070** |
-| | **v1.1** (`class`) | 0.625 | 0.530 | 0.228 | **1.383**[cite: 5] |
+| | **v1.1** (`class`) | 0.625 | 0.530 | 0.228 | **1.383** |
 | **1 000 000** | **v1.0** (`struct`) | 5.195 | 3.656 | 2.251 | **11.102** |
-| | **v1.1** (`class`) | 6.312 | 7.064 | 2.277 | **15.653**[cite: 6] |
+| | **v1.1** (`class`) | 6.312 | 7.064 | 2.277 | **15.653** |
 
 ---
 
