@@ -1,4 +1,4 @@
-# Studentų rezultatų skaičiavimo ir spartos analizės sistema (v1.1)
+# Programos veikimo spartos analizė (v1.1)
 
 Ši programa skirta studentų namų darbų ir egzamino rezultatų apdorojimui, galutinio balo (pagal vidurkį arba medianą) skaičiavimui bei studentų rūšiavimui į dvi kategorijas („vargšiukai“ ir „kietiakai“). 
 
@@ -33,5 +33,5 @@ Tyrimas atliktas su `Studentas` klase, naudojant `std::vector` ir 3-iąją strat
 | | **1 000 000** | 3.431 | 1.806 | 2.328 | **7.565** | 231 KB |
 
 ### Tyrimo išvados
-1. **Optimizavimo įtaka:** Įjungus bet kurį optimizavimo lygį (`-O1`, `-O2` ar `-O3`), programos veikimo greitis padidėja beveik **du kartus** (pvz., su 1 000 000 įrašų bendras laikas nukrito nuo ~15.65 s iki ~7.4–7.5 s). Tai įrodo, kaip kompiliatorius pagreitina pasiektą objektinį kodą.
+1. **Optimizavimo įtaka:** Įjungus bet kurį optimizavimo lygį (`-O1`, `-O2` ar `-O3`), programos veikimo greitis padidėja beveik **du kartus** (pvz., su 1 000 000 įrašų bendras laikas nukrito nuo 15.65 s iki 7.4–7.5 s). Tai įrodo, kaip kompiliatorius pagreitina pasiektą objektinį kodą.
 2. **Skirtumai tarp `-O1`, `-O2` ir `-O3`:** Šiame konkrečiame projekte skirtumai tarp skirtingų optimizavimo lygių yra minimalūs, nes pagrindinis pagreitėjimas pasiekiamas jau ties pirmuoju optimizavimo lygiu.
