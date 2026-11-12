@@ -8,9 +8,9 @@
 
 int ivestiSkaiciu(const std::string &zinute);
 void generuotiFaila(const std::string& failoPavadinimas, int kiekis, int nd_kiekis = 5);
-void isvestiIFaila(const std::string &failoPavadinimas, const std::vector<studentas> &sarasas, int pasirinkimas);
-void isvestiIFaila(const std::string &failoPavadinimas, const std::list<studentas> &sarasas, int pasirinkimas);
-void printas(const studentas& s, int pasirinkimas);
+void isvestiIFaila(const std::string &failoPavadinimas, const std::vector<Studentas> &sarasas, int pasirinkimas);
+void isvestiIFaila(const std::string &failoPavadinimas, const std::list<Studentas> &sarasas, int pasirinkimas);
+void printas(const Studentas& s, int pasirinkimas);
 
 #endif
 

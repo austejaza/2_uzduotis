@@ -22,15 +22,15 @@ int ivestiSkaiciu(const std::string& pranesimas) {
 }
 
 void printas(const studentas& s, int pasirinkimas) {
-    std::cout << std::left << std::setw(15) << s.vardas
-              << std::left << std::setw(15) << s.pavarde;
+    std::cout << std::left << std::setw(15) << s.vardas()
+              << std::left << std::setw(15) << s.pavarde();
     if (pasirinkimas == 1) {
-        std::cout << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid << "\n";
+        std::cout << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid() << "\n";
     } else if (pasirinkimas == 2) {
-        std::cout << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med << "\n";
+        std::cout << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med() << "\n";
     } else {
-        std::cout << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid
-                  << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med << "\n";
+        std::cout << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid()
+                  << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med() << "\n";
     }
 }
 
@@ -53,15 +53,15 @@ void isvestiIFaila(const std::string& failo_pavadinimas, const std::vector<stude
     }
 
     for (const auto& s : sarasas) {
-        fr << std::left << std::setw(15) << s.vardas
-           << std::left << std::setw(15) << s.pavarde;
+        fr << std::left << std::setw(15) << s.vardas()
+           << std::left << std::setw(15) << s.pavarde();
         if (pasirinkimas == 1) {
-            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid << "\n";
+            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid() << "\n";
         } else if (pasirinkimas == 2) {
-            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med << "\n";
+            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med() << "\n";
         } else {
-            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid
-               << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med << "\n";
+            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid()
+               << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med() << "\n";
         }
     }
     fr.close();
@@ -85,15 +85,15 @@ void isvestiIFaila(const std::string& failo_pavadinimas, const std::list<student
     }
 
     for (const auto& s : sarasas) {
-        fr << std::left << std::setw(15) << s.vardas
-           << std::left << std::setw(15) << s.pavarde;
+        fr << std::left << std::setw(15) << s.vardas()
+           << std::left << std::setw(15) << s.pavarde();
         if (pasirinkimas == 1) {
-            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid << "\n";
+            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid() << "\n";
         } else if (pasirinkimas == 2) {
-            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med << "\n";
+            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med() << "\n";
         } else {
-            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid
-               << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med << "\n";
+            fr << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_vid()
+               << std::right << std::setw(18) << std::fixed << std::setprecision(2) << s.galutinis_med() << "\n";
         }
     }
     fr.close();

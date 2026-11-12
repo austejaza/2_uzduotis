@@ -81,3 +81,30 @@
 	"studentas.h"
 	"funkcijos.h"
 
+1794508535 source:c:\users\auste\desktop\antras_projektas\main.cpp
+	<iostream>
+	<string>
+	<vector>
+	<iomanip>
+	<algorithm>
+	<sstream>
+	<cstdlib>
+	<ctime>
+	<fstream>
+	<list>
+	"studentas.h"
+	"funkcijos.h"
+
+1794509143 c:\users\auste\desktop\antras_projektas\studentas.h
+	<string>
+	<vector>
+	<iostream>
+
+1794509888 c:\users\auste\desktop\antras_projektas\funkcijos.h
+	<string>
+	<vector>
+	<list>
+	"studentas.h"
+
+1794508535 source:c:\users\auste\desktop\antras_projektas\v0.3_projektas\main.cpp
+
