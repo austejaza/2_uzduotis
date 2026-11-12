@@ -1,6 +1,5 @@
 #ifndef FUNKCIJOS_H_INCLUDED
 #define FUNKCIJOS_H_INCLUDED
-
 #include <string>
 #include <vector>
 #include <list>

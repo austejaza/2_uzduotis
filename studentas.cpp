@@ -8,7 +8,7 @@ Studentas::Studentas() : exam_(0), galutinis_vid_(0), galutinis_med_(0) {}
 Studentas::Studentas(std::istream& is) {
     readStudent(is);
 }
-
+//destruktorius
 Studentas::~Studentas() {
     paz_.clear();
 }
